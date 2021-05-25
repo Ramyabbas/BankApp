@@ -1,0 +1,66 @@
+﻿@using System.Collections.Specialized
+@using Microsoft.EntityFrameworkCore.Scaffolding
+
+
+@model BankAppMvc.ViewModels.CustomerTransactionsViewModel
+
+@{ ViewData["Title"] = "Customers Transactions"; }
+
+<section class="py-5">
+
+    <div class="row">
+        <div class="col-lg-12 mb-5">
+            <div class="card">
+                <div class="card-header">
+
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover" id="transaction">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Konotonummer</th>
+                                <th scope="col">Datum</th>
+                                <th scope="col">Typ</th>
+                                <th scope="col">Drift</th>
+                                <th scope="col">Belopp</th>
+                                <th scope="col">Summa</th>
+                                <th scope="col">Bank</th>
+                                <th scope="col">Konto</th>
+
+                            </tr>
+                        </thead>
+                        <thead>
+                            @foreach (var transaction in Model.Transactions)
+                            {
+                                <partial name="_TransactionRow" model="@transaction" />
+                            }
+                    </table>
+                </div>
+                <a class="btn btn-primary" href="#" onclick="fetch20more(); return false;">se 20 transaktioner till ....</a>
+
+                @section Scripts
+                            {
+                    <script>
+                        var skip = 0;
+                        console.log("here")
+                        function fetch20more() {
+                            skip = skip + 20;
+                            $.ajax({
+                                url: "/Transaction/GetTransactionsFrom?skip=" + skip, success: function (result) {
+                                    $("#transaction").append(result);
+                                }
+                            });
+                        }
+                    </script>
+                }
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+
+

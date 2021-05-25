@@ -1,0 +1,186 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewData["Title"] - BankAppMvc</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="~/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <!-- Google fonts - Popppins for copy-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,800">
+    <!-- orion icons-->
+    <link rel="stylesheet" href="~/css/orionicons.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="~/css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="~/css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.png?3">
+    <!-- Tweaks for older IEs-->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+
+</head>
+<body>
+    <!-- navbar-->
+    <header class="header">
+        <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
+            <a href="#" class="sidebar-toggler text-gray-500 mr-4 mr-lg-5 lead"><i class="fas fa-align-left"></i></a>
+            <a asp-controller="Home" asp-action="Index" class="navbar-brand font-weight-bold text-uppercase text-base">Ramys Bank</a>
+            <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
+            </ul>
+
+        </nav>
+    </header>
+    <div class="d-flex align-items-stretch">
+        <div id="sidebar" class="sidebar py-3">
+            <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">MAIN</div>
+            <ul class="sidebar-menu list-unstyled">
+
+
+                <li class="sidebar-list-item"><a asp-controller="Home" asp-action="Index" class="sidebar-link text-muted"><i class="o-home-1 mr-3 text-gray"></i><span>Home</span></a></li>
+                <li class="sidebar-list-item"><a asp-controller="Customer" asp-action="Index" class="sidebar-link text-muted"><i class="o-id-card-1 mr-3 text-gray"></i><span>Våra kunder</span></a></li>
+
+                @if (SignInManager.IsSignedIn(User))
+                {
+
+                    @if (User.IsInRole("Admin") || User.IsInRole("Cashier"))
+                    {
+
+                        <li class="sidebar-list-item">
+                            <a href="#" data-toggle="collapse" data-target="#Transfer" aria-expanded="false" aria-controls="Transfer" class="sidebar-link text-muted"><i class="o-wireframe-1 mr-3 text-gray"></i><span>Överföring, insättning och uttag </span></a>
+                            <div id="Transfer" class="collapse">
+                                <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
+
+                                    <li class="sidebar-list-item">
+                                        <a asp-controller="Transfer" asp-action="NewTransfer" class="sidebar-link text-muted"><i class="o--1 mr-3 text-gray"></i><span>Överföra</span></a>
+                                    </li>
+                                    <li class="sidebar-list-item">
+                                        <a asp-controller="PutMoney" asp-action="PutMoney" class="sidebar-link text-muted"><i class="o--1 mr-3 text-gray"></i><span>Sätt in</span></a>
+                                    </li>
+                                    <li class="sidebar-list-item">
+                                        <a asp-controller="TakeOutMoney" asp-action="TakeOutMoney" class="sidebar-link text-muted"><i class="o--1 mr-3 text-gray"></i><span>Ta ut</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="sidebar-list-item">
+                            <a href="#" data-toggle="collapse" data-target="#page" aria-expanded="false" aria-controls="page" class="sidebar-link text-muted"><i class="o-user-details-1 mr-3 text-gray"></i><span>Hantera kunder</span></a>
+                            <div id="page" class="collapse">
+                                <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
+
+                                    <li class="sidebar-list-item">
+                                        <a asp-controller="Customer" asp-action="New" class="sidebar-link text-muted"><i class="o--1 mr-3 text-gray"></i><span>Ny kund</span></a>
+                                    </li>
+                                    <li class="sidebar-list-item">
+                                        <a asp-controller="Customer" asp-action="Edit" class="sidebar-link text-muted"><i class="o--1 mr-3 text-gray"></i><span>Ändra kund</span></a>
+                                    </li>
+                                    <li class="sidebar-list-item">
+                                        <a asp-controller="Customer" asp-action="Delete" class="sidebar-link text-muted"><i class="o--1 mr-3 text-gray"></i><span>Ta bort kund</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="sidebar-list-item">
+                            <a href="#" data-toggle="collapse" data-target="#pages" aria-expanded="false" aria-controls="pages" class="sidebar-link text-muted"><i class="o-id-card-1 mr-3 text-gray"></i><span>Hantera konton</span></a>
+                            <div id="pages" class="collapse">
+                                <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
+
+                                    <li class="sidebar-list-item">
+                                        <a asp-controller="Account" asp-action="New" class="sidebar-link text-muted"><i class="o--1 mr-3 text-gray"></i><span>Nytt konto</span></a>
+                                    </li>
+                                    <li class="sidebar-list-item">
+                                        <a asp-controller="Account" asp-action="Edit" class="sidebar-link text-muted"><i class="o--1 mr-3 text-gray"></i><span>Ändra konto</span></a>
+                                    </li>
+                                    <li class="sidebar-list-item">
+                                        <a asp-controller="Account" asp-action="Delete" class="sidebar-link text-muted"><i class="o--1 mr-3 text-gray"></i><span>Ta bort konto</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                    }
+
+                    <li class="sidebar-list-item">
+
+                        <a asp-area="Identity" asp-page="/Account/Manage/Index" class="sidebar-link text-muted"><i class="o-exit-1 mr-3 text-gray"></i><span>My account</span></a>
+                        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <a asp-controller="Home" asp-action="Logout" class="sidebar-link text-muted"><i class="o-exit-1 mr-3 text-gray"></i><span>Logout</span></a>
+                        </form>
+                    </li>
+
+                }
+
+                else
+                {
+
+                    <li class="sidebar-list-item">
+                        <a asp-area="Identity" asp-page="/Account/Login" class="sidebar-link text-muted">
+                            <i class="o-exit-1 mr-3 text-gray"></i><span>Login</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item">
+                        <a asp-area="Identity" asp-page="/Account/Register" class="sidebar-link text-muted">
+                            <i class="o-exit-1 mr-3 text-gray"></i><span>Register</span>
+                        </a>
+                    </li>
+
+                }
+
+
+            </ul>
+        </div>
+        <div class="page-holder w-100 d-flex flex-wrap">
+            <div class="container-fluid px-xl-5">
+                @RenderBody()
+            </div>
+            <footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
+                <div class="container-fluid">
+                    <div class="col-md-6 text-center text-md-right text-gray-400">
+                        <p class="mb-0">Design by <a href="https://bootstrapious.com/admin-templates" class="external text-gray-400">Bootstrapious</a></p>
+                        <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+
+                    </div>
+                </div>
+        </div>
+        </footer>
+    </div>
+    </div>
+    <!-- JavaScript files-->
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/popper.js/umd/popper.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/vendor/jquery.cookie/jquery.cookie.js"></script>
+    <script src="~/vendor/chart.js/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="~/js/charts-home.js"></script>
+    <script src="~/js/front.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/ourownvalidation.js"></script>
+
+
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        })
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

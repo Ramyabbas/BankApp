@@ -1,0 +1,42 @@
+﻿@model BankAppMvc.ViewModels.StartPageViewModel;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<section class="py-5">
+    <div class="row">
+        <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
+            <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                <div class="flex-grow-1 d-flex align-items-center">
+                    <div class="dot mr-3 bg-violet"></div>
+                    <div class="text">
+                        <h6 class="mb-0">Antal kunder</h6><span class="text-gray">@Model.Customers</span>
+                    </div>
+                </div>
+                <div class="icon text-white bg-violet"><i class="fa fa-user"></i></div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
+            <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                <div class="flex-grow-1 d-flex align-items-center">
+                    <div class="dot mr-3 bg-blue"></div>
+                    <div class="text">
+                        <h6 class="mb-0">Antal konton</h6><span class="text-gray">@Model.Accounts</span>
+                    </div>
+                </div>
+                <div class="icon text-white bg-blue"><i class="o-id-card-1" aria-hidden="true"></i></div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
+            <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                <div class="flex-grow-1 d-flex align-items-center">
+                    <div class="dot mr-3 bg-red"></div>
+                    <div class="text">
+                        <h6 class="mb-0">Summan av saldo på konton</h6><span class="text-gray">@Model.Amount</span>
+                    </div>
+                </div>
+                <div class="icon text-white bg-red"><i class="o-data-storage-1" aria-hidden="true"></i></div>
+            </div>
+        </div>
+    </div>
+</section>
