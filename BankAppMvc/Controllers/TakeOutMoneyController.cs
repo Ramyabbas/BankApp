@@ -16,13 +16,11 @@ namespace BankAppMvc.Controllers
 {
     public class TakeOutMoneyController : Controller
     {
-        private readonly ILogger<TakeOutMoneyController> _logger;
         private readonly ITransactionRepository _transactions;
         private readonly IAccountsRepository _accounts;
 
-        public TakeOutMoneyController(ILogger<TakeOutMoneyController> logger, ITransactionRepository transaction, IAccountsRepository accounts)
+        public TakeOutMoneyController(ITransactionRepository transaction, IAccountsRepository accounts)
         {
-            _logger = logger;
             _accounts = accounts;
             _transactions = transaction;
         }
@@ -51,7 +49,6 @@ namespace BankAppMvc.Controllers
             else if(takeOutMoney.Amount <= 0)
             {
                 ModelState.AddModelError("Amount", "Belopp måste vara positivt summa!");
-                Console.WriteLine("Here");
             }
 
             else if (account.Balance < takeOutMoney.Amount)

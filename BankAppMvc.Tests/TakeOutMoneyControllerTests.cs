@@ -11,19 +11,18 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.IO;
-using System.Collections.Generic;
 
 namespace BankAppMvc.Tests
 {  
     [TestClass]
-    public class TransferControllerTests
+    public class TakeOutMoneyControllerTests 
     {
-        private TransferController sut;
+        private TakeOutMoneyController sut;
         private IMock<ITransactionRepository> transRepoMock;
         private IMock<IAccountsRepository> accRepoMock;
         private ApplicationDbContext ctx;
 
-        public TransferControllerTests()
+        public TakeOutMoneyControllerTests()
         {
             transRepoMock = new Mock<ITransactionRepository>();
             accRepoMock = new Mock<IAccountsRepository>();
@@ -33,74 +32,72 @@ namespace BankAppMvc.Tests
                 .EnableSensitiveDataLogging()
                 .Options;
             ctx = new ApplicationDbContext(options);
-            sut = new TransferController(transRepoMock.Object, accRepoMock.Object);
+            sut = new TakeOutMoneyController(transRepoMock.Object, accRepoMock.Object);
+           
         }
 
         [TestMethod]
-        public void WhenTransferMoreMoneyThanIsInTheAccount()
+        public void WhenAmountToTakeOutIsBiggerThanBalance()
+        {
+            var account = new Accounts 
+            {
+                AccountId = 1,
+                Balance = 20, 
+                Created = DateTime.Now, 
+                Frequency="Hej" 
+            };
+            ctx.Accounts.Add(account);
+            TakeOutMoneyViewModel tom = new TakeOutMoneyViewModel
+            {
+                AccountId = 1,
+                Amount = 40
+            };
+            sut.TakeOutMoney(tom);
+            Assert.IsFalse(sut.ViewData.ModelState.IsValid);
+        }
+
+        [TestMethod]
+        public void WhenAmountIsNegative()
         {
             var account = new Accounts
             {
                 AccountId = 1,
-                Balance = 10,
-                Created = DateTime.Now,
-                Frequency = "Hej"
-            };
-            var account2 = new Accounts
-            {
-                AccountId = 4,
                 Balance = 100,
                 Created = DateTime.Now,
-                Frequency = "Då"
+                Frequency = "Hopp"
             };
-
             ctx.Accounts.Add(account);
-            ctx.Accounts.Add(account2);
             ctx.SaveChanges();
-
-            var newTransfer = new NewTransferViewModel
+            var viewModel = new TakeOutMoneyViewModel
             {
                 AccountId = 1,
-                AccountReceiversId = 4,
-                Amount = 50
+                Amount = -20
             };
-
-            sut.NewTransfer(newTransfer);
-
+            sut.TakeOutMoney(viewModel);
             Assert.IsFalse(sut.ViewData.ModelState.IsValid);
         }
         [TestMethod]
-        public void WhenAccountIdNotFound()
+        public void WhenAccountIsNotFound()
         {
             var a = new Accounts
             {
-                AccountId = 4,
-                Balance = 1000,
+                AccountId = 8,
+                Balance = 2200,
                 Created = DateTime.Now,
-                Frequency = "Nu"
+                Frequency = "TaCk"
             };
-            var a2 = new Accounts
-            {
-                AccountId = 7,
-                Balance = 5000,
-                Created = DateTime.Now,
-                Frequency = "Sen"
-            };
-
             ctx.Accounts.Add(a);
-            ctx.Accounts.Add(a2);
             ctx.SaveChanges();
-
-            var newTransfer = new NewTransferViewModel
+            var viewModel = new TakeOutMoneyViewModel
             {
-                AccountId = 3,
-                AccountReceiversId = 7,
-                Amount = 500
+                AccountId = 10,
+                Amount = 100
             };
 
-            sut.NewTransfer(newTransfer);
-
+            sut.TakeOutMoney(viewModel);
             Assert.IsFalse(sut.ViewData.ModelState.IsValid);
         }
+
+
     }
 }

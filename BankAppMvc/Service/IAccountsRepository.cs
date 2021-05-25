@@ -42,18 +42,6 @@ namespace BankAppMvc.Service
         {
             _dbContext.Accounts.Remove(deleteAccount);
         }
-
-        public Accounts GetAccount(int viewModelAccount)
-        {
-            var cheack =_dbContext.Accounts.Where(a => a.AccountId == viewModelAccount).FirstOrDefault();
-            if(cheack != null)
-            {
-                return cheack;
-            }
-
-            return null;
-        }
-
         public void Save()
         {
             _dbContext.SaveChanges();

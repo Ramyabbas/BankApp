@@ -43,19 +43,22 @@ namespace BankAppMvc.Controllers
         {
             var account = _accounts.GetAllAccounts().FirstOrDefault(r => r.AccountId == newTransfer.AccountId);
             var accountMot = _accounts.GetAllAccounts().FirstOrDefault(r => r.AccountId == newTransfer.AccountReceiversId);
-
             if (account == null)
             {
                 ModelState.AddModelError("AccountId", "Kontot hittades inte i vår system!");
             }
-            if (accountMot == null)
+            else if (accountMot == null)
             {
-                ModelState.AddModelError("AccountIdReception", "Kontot hittades inte i vår system!");
+                ModelState.AddModelError("AccountReceiversId", "Kontot hittades inte i vår system!");
 
             }
-            if(account.Balance < newTransfer.Amount)
+            else if(account.Balance < newTransfer.Amount)
             {
                 ModelState.AddModelError("Amount", "Det finns inte tillräckligt mycket pengar på kontot!");
+            }
+            else if (newTransfer.Amount <= 0)
+            {
+                ModelState.AddModelError("Amount", "Belopp måste vara positivt summa!");
             }
 
             if (ModelState.IsValid)

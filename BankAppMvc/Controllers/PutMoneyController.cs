@@ -16,13 +16,11 @@ namespace BankAppMvc.Controllers
 {
     public class PutMoneyController : Controller
     {
-        private readonly ILogger<PutMoneyController> _logger;
         private readonly ITransactionRepository _transactions;
         private readonly IAccountsRepository _accounts;
 
-        public PutMoneyController(ILogger<PutMoneyController> logger, ITransactionRepository transaction, IAccountsRepository accounts)
+        public PutMoneyController(ITransactionRepository transaction, IAccountsRepository accounts)
         {
-            _logger = logger;
             _accounts = accounts;
             _transactions = transaction;
         }

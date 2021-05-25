@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\rami9\\OneDrive\\Skrivbord\\Skolan\\BankAppMvc\\BankAppMvc.Tests\\BankAppMvc.Tests.csproj": {}
+    "C:\\Users\\rami9\\Source\\Repos\\BankApp\\BankAppMvc.Tests\\BankAppMvc.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\rami9\\OneDrive\\Skrivbord\\Skolan\\BankAppMvc\\BankAppMvc.Tests\\BankAppMvc.Tests.csproj": {
+    "C:\\Users\\rami9\\Source\\Repos\\BankApp\\BankAppMvc.Tests\\BankAppMvc.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rami9\\OneDrive\\Skrivbord\\Skolan\\BankAppMvc\\BankAppMvc.Tests\\BankAppMvc.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\rami9\\Source\\Repos\\BankApp\\BankAppMvc.Tests\\BankAppMvc.Tests.csproj",
         "projectName": "BankAppMvc.Tests",
-        "projectPath": "C:\\Users\\rami9\\OneDrive\\Skrivbord\\Skolan\\BankAppMvc\\BankAppMvc.Tests\\BankAppMvc.Tests.csproj",
+        "projectPath": "C:\\Users\\rami9\\Source\\Repos\\BankApp\\BankAppMvc.Tests\\BankAppMvc.Tests.csproj",
         "packagesPath": "C:\\Users\\rami9\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rami9\\OneDrive\\Skrivbord\\Skolan\\BankAppMvc\\BankAppMvc.Tests\\obj\\",
+        "outputPath": "C:\\Users\\rami9\\Source\\Repos\\BankApp\\BankAppMvc.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\rami9\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,8 +28,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\rami9\\OneDrive\\Skrivbord\\Skolan\\BankAppMvc\\BankAppMvc\\BankAppMvc.csproj": {
-                "projectPath": "C:\\Users\\rami9\\OneDrive\\Skrivbord\\Skolan\\BankAppMvc\\BankAppMvc\\BankAppMvc.csproj"
+              "C:\\Users\\rami9\\Source\\Repos\\BankApp\\BankAppMvc\\BankAppMvc.csproj": {
+                "projectPath": "C:\\Users\\rami9\\Source\\Repos\\BankApp\\BankAppMvc\\BankAppMvc.csproj"
               }
             }
           }
@@ -95,14 +95,14 @@
         }
       }
     },
-    "C:\\Users\\rami9\\OneDrive\\Skrivbord\\Skolan\\BankAppMvc\\BankAppMvc\\BankAppMvc.csproj": {
+    "C:\\Users\\rami9\\Source\\Repos\\BankApp\\BankAppMvc\\BankAppMvc.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rami9\\OneDrive\\Skrivbord\\Skolan\\BankAppMvc\\BankAppMvc\\BankAppMvc.csproj",
+        "projectUniqueName": "C:\\Users\\rami9\\Source\\Repos\\BankApp\\BankAppMvc\\BankAppMvc.csproj",
         "projectName": "BankAppMvc",
-        "projectPath": "C:\\Users\\rami9\\OneDrive\\Skrivbord\\Skolan\\BankAppMvc\\BankAppMvc\\BankAppMvc.csproj",
+        "projectPath": "C:\\Users\\rami9\\Source\\Repos\\BankApp\\BankAppMvc\\BankAppMvc.csproj",
         "packagesPath": "C:\\Users\\rami9\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rami9\\OneDrive\\Skrivbord\\Skolan\\BankAppMvc\\BankAppMvc\\obj\\",
+        "outputPath": "C:\\Users\\rami9\\Source\\Repos\\BankApp\\BankAppMvc\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\rami9\\AppData\\Roaming\\NuGet\\NuGet.Config",
