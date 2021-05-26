@@ -53,7 +53,7 @@ namespace BankAppMvc.Controllers
 
             else if (account.Balance < takeOutMoney.Amount)
             {
-                ModelState.AddModelError("Amount", "Det finns tillräckligt mycket pengar på kontot!");
+                ModelState.AddModelError("Amount", "Det finns inte tillräckligt mycket pengar på kontot!");
             }
 
             if(ModelState.IsValid)
