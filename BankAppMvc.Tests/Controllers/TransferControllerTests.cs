@@ -54,9 +54,9 @@ namespace BankAppMvc.Tests
                 Frequency = "Då"
             };
 
-            ctx.Accounts.Add(account);
-            ctx.Accounts.Add(account2);
-            ctx.SaveChanges();
+            accRepoMock.Object.AddAccount(account);
+            accRepoMock.Object.AddAccount(account2);
+            accRepoMock.Object.Save();
 
             var newTransfer = new NewTransferViewModel
             {
@@ -87,9 +87,9 @@ namespace BankAppMvc.Tests
                 Frequency = "Sen"
             };
 
-            ctx.Accounts.Add(a);
-            ctx.Accounts.Add(a2);
-            ctx.SaveChanges();
+            accRepoMock.Object.AddAccount(a);
+            accRepoMock.Object.AddAccount(a2);
+            accRepoMock.Object.Save();
 
             var newTransfer = new NewTransferViewModel
             {
@@ -101,6 +101,71 @@ namespace BankAppMvc.Tests
             sut.NewTransfer(newTransfer);
 
             Assert.IsFalse(sut.ViewData.ModelState.IsValid);
+        }
+        [TestMethod]
+        public void WhenNewTransferAmountIsNegative()
+        {
+            var accountTest = new Accounts
+            {
+                AccountId = 132,
+                Balance = 4000,
+                Created = DateTime.Now,
+                Frequency = "tester"
+            };
+            var accountTest2 = new Accounts
+            {
+                AccountId = 222,
+                Balance = 500,
+                Created = DateTime.Now,
+                Frequency = "c#"
+            };
+
+            accRepoMock.Object.AddAccount(accountTest);
+            accRepoMock.Object.AddAccount(accountTest2);
+            accRepoMock.Object.Save();
+
+            var newTransfer = new NewTransferViewModel
+            {
+                AccountId = 132,
+                AccountReceiversId = 222,
+                Amount = -330
+            };
+
+            sut.NewTransfer(newTransfer);
+            Assert.IsFalse(sut.ViewData.ModelState.IsValid);
+
+        }
+        [TestMethod]
+        public void WhenNewTransactionsIsCorrect()
+        {
+            var account = new Accounts
+            {
+                AccountId = 30,
+                Balance = 10000,
+                Created = DateTime.Now,
+                Frequency = "Test"
+            };
+            var accountMot = new Accounts
+            {
+                AccountId = 100,
+                Balance = 1000,
+                Created = DateTime.Now,
+                Frequency = "Bank"
+            };
+
+            accRepoMock.Object.AddAccount(account);
+            accRepoMock.Object.DeleteAccount(accountMot);
+            accRepoMock.Object.Save();
+            var viewModel = new NewTransferViewModel
+            {
+                AccountId = 30,
+                AccountReceiversId = 100,
+                Amount = 500
+            };
+
+            var result = sut.NewTransfer(viewModel);
+            var resultAction = result as ActionResult;
+            Assert.IsInstanceOfType(resultAction, typeof(ViewResult));
         }
     }
 }

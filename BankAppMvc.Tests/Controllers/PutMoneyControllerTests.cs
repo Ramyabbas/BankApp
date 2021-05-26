@@ -46,8 +46,8 @@ namespace BankAppMvc.Tests
                 Created = DateTime.Now,
                 Frequency = "Hopp"
             };
-            ctx.Accounts.Add(account);
-
+            accRepoMock.Object.AddAccount(account);
+            accRepoMock.Object.Save();
             var viewModel = new PutMoneyInViewModel
             {
                 AccountId = 1,
@@ -67,8 +67,8 @@ namespace BankAppMvc.Tests
                 Created = DateTime.Now,
                 Frequency = "hah"
             };
-            ctx.Accounts.Add(account);
-            ctx.SaveChanges();
+            accRepoMock.Object.AddAccount(account);
+            accRepoMock.Object.Save();
             var viewModel = new PutMoneyInViewModel
             {
                 AccountId = 10,
@@ -78,6 +78,29 @@ namespace BankAppMvc.Tests
             sut.PutMoney(viewModel);
             Assert.IsFalse(sut.ViewData.ModelState.IsValid);
         }
-        
+
+        [TestMethod]
+        public void WhenPutInMoneyCorrect()
+        {
+            var account = new Accounts
+            {
+                AccountId = 7,
+                Balance = 20,
+                Created = DateTime.Now,
+                Frequency = "Now"
+            };
+            accRepoMock.Object.AddAccount(account);
+            accRepoMock.Object.Save();
+            var viewModel = new PutMoneyInViewModel
+            {
+                AccountId = 7,
+                Amount = 100
+            };
+
+            var result = sut.PutMoney(viewModel);
+            var resultAction = result as ActionResult;
+            Assert.IsInstanceOfType(resultAction, typeof(ViewResult));
+        }
+
     }
 }

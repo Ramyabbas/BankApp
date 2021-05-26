@@ -46,7 +46,8 @@ namespace BankAppMvc.Tests
                 Created = DateTime.Now, 
                 Frequency="Hej" 
             };
-            ctx.Accounts.Add(account);
+            accRepoMock.Object.AddAccount(account);
+            accRepoMock.Object.Save();
             TakeOutMoneyViewModel tom = new TakeOutMoneyViewModel
             {
                 AccountId = 1,
@@ -66,8 +67,8 @@ namespace BankAppMvc.Tests
                 Created = DateTime.Now,
                 Frequency = "Hopp"
             };
-            ctx.Accounts.Add(account);
-            ctx.SaveChanges();
+            accRepoMock.Object.AddAccount(account);
+            accRepoMock.Object.Save();
             var viewModel = new TakeOutMoneyViewModel
             {
                 AccountId = 1,
@@ -86,8 +87,8 @@ namespace BankAppMvc.Tests
                 Created = DateTime.Now,
                 Frequency = "TaCk"
             };
-            ctx.Accounts.Add(a);
-            ctx.SaveChanges();
+            accRepoMock.Object.AddAccount(a);
+            accRepoMock.Object.Save();
             var viewModel = new TakeOutMoneyViewModel
             {
                 AccountId = 10,
@@ -96,6 +97,30 @@ namespace BankAppMvc.Tests
 
             sut.TakeOutMoney(viewModel);
             Assert.IsFalse(sut.ViewData.ModelState.IsValid);
+        }
+
+        [TestMethod]
+        public void WhenTakeOutCorrect()
+        {
+            var account = new Accounts
+            {
+                AccountId = 9,
+                Balance = 1000,
+                Created = DateTime.Now,
+                Frequency = "Now"
+            };
+
+            accRepoMock.Object.AddAccount(account);
+            accRepoMock.Object.Save();
+            var viewModel = new TakeOutMoneyViewModel
+            {
+                AccountId = 9,
+                Amount = 500
+            };
+
+            var result = sut.TakeOutMoney(viewModel);
+            var resultAction = result as ActionResult;
+            Assert.IsInstanceOfType(resultAction, typeof(ViewResult));
         }
 
 
